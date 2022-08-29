@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Annotate & Highlight",
+    "description": "An extension for highlighting and annotating on web pages. It alsp saves the highlights and annotation for future revisit in the websites",
+    "version": "1.0",
+    
+    "background": {
+        "service_worker": "script/background.js"
+    },
+    "action": {
+        "default_popup": "html/popup.html",
+        "default_icon": "images/icon128x128.png"
+    },
+    "icons": {
+        "16": "images/icon16x16.png",
+        "32": "images/icon32x32.png",
+        "48": "images/icon48x48.png",
+        "128": "images/icon128x128.png"
+    },
+
+    "author": "Manas Raut, Yash Sawant, Vignesh Pillutla, Pranav Satam"
+}
