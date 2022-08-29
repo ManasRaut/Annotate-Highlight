@@ -5,8 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annotate & Highlight</title>
+    <link rel="stylesheet" type="text/css" href="popup.css">
 </head>
 <body>
-    // Insert body here
+    <div class="header">
+        Toggle extension On or Off: 
+        <label class="switch">
+            <input id="toggleExtension" type="checkbox" checked="true">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <div class="section">
+        <div class="section-title">Select color</div>
+        <div class="color-list">
+            <div class="color-button" id="redcolor"></div>
+            <div class="color-button" id="greencolor"></div>
+            <div class="color-button" id="bluecolor"></div>
+            <div class="color-button" id="yellowcolor"></div>
+        </div>
+    </div>
+    <div class="section-block">
+        <div class="section-title">Annotations & Highlights:</div>
+        <div>
+            <input type="text" id="searchInput" placeholder="Search annotation... ">
+        </div>
+        <div class="list-box">
+            <div class="list-item">
+                <div class="list-colorbox"></div>
+                <div class="list-name">Clafefeaf.....</div>
+                <div class="list-options">
+                    <div class="list-btns">E</div>
+                    <div class="list-btns">D</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
 </body>
 </html>
