@@ -8,16 +8,20 @@
         "service_worker": "script/background.js"
     },
     "action": {
-        "default_popup": "html/popup.html",
+        "default_popup": "popup/popup.html",
         "default_icon": "images/icon128x128.png"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "tabs"
     ],
     "content_scripts": [
         {
           "matches": ["<all_urls>"],
-          "js": ["script/highlight.js"]
+          "js": [
+            "script/highlight.js",
+            "utils/utils.js"
+            ]
         }
     ],
     "icons": {
@@ -26,6 +30,16 @@
         "48": "images/icon48x48.png",
         "128": "images/icon128x128.png"
     },
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "images/*.png"
+            ]
+        }
+    ],
 
     "author": "Manas Raut, Yash Sawant, Vignesh Pillutla, Pranav Satam"
 }

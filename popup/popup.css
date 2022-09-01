@@ -155,3 +155,21 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+.add-btn {
+    color: white;
+    padding: 8px 14px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 2px 2px rgb(233, 233, 233);
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+.add-btn:hover {
+    box-shadow: 1px 1px 2px 4px rgb(233, 233, 233);
+}
+.add-btn-on {
+    background-color: rgb(243, 161, 147);
+}
+.add-btn-off {
+    background-color: orange;;
+}
