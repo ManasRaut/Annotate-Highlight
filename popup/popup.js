@@ -14,19 +14,15 @@ toggleExtensionOnorOffButton.addEventListener("click", (_event) => {
 });
 
 addNewHighlightBtn.addEventListener("click", (_event) => {
-    turnOnHighlighter();
+    toggleHighlighter();
 });
 
-function turnOnHighlighter() {
+function toggleHighlighter() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         console.log(tabs)
-        chrome.tabs.sendMessage(
-            tabs[0].id, 
-            {
-                task: HIGHLIGHT_ON,
-                nextId: highlightsList.length
-            },
-            (response) => handleResponse(response)
+        chrome.tabs.sendMessage( tabs[0].id, {
+                task: TOGGLE_HIGHLIGHTER,
+            }, (response) => handleResponse(response)
         );
     });
 }

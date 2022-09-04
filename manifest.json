@@ -3,6 +3,7 @@
     "name": "Annotate & Highlight",
     "description": "An extension for highlighting and annotating on web pages. It alsp saves the highlights and annotation for future revisit in the websites",
     "version": "1.0",
+    "author": "Manas Raut, Yash Sawant, Vignesh Pillutla, Pranav Satam",
     
     "background": {
         "service_worker": "script/background.js"
@@ -13,14 +14,17 @@
     },
     "permissions": [
         "storage",
-        "tabs"
+        "tabs",
+        "contextMenus"
     ],
     "content_scripts": [
         {
           "matches": ["<all_urls>"],
           "js": [
             "script/highlight.js",
-            "utils/utils.js"
+            "utils/constants.js",
+            "utils/commonUtils.js",
+            "utils/messages.js"
             ]
         }
     ],
@@ -41,5 +45,10 @@
         }
     ],
 
-    "author": "Manas Raut, Yash Sawant, Vignesh Pillutla, Pranav Satam"
+    "commands": {
+        "toggle-highlighter": {
+            "suggested_key": "Alt+H",
+            "description": "Turns highlighter cursor on or off"
+        }
+    }
 }
