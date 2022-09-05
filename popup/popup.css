@@ -33,7 +33,6 @@ html {
 .color-button {
     width: 30px;
     height: 30px;
-    box-shadow: 1px 1px 1px 2px lightgray;
     border-radius: 20px;
     margin: 0px 4px;
 }
@@ -172,4 +171,8 @@ input:checked + .slider:before {
 }
 .add-btn-off {
     background-color: orange;;
+}
+.selectedColor {
+    box-shadow: 2px 2px 8px 1px rgb(180, 180, 180);
+    border: 1px solid dodgerblue;
 }

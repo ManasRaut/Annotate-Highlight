@@ -8,6 +8,16 @@ chrome.runtime.onInstalled.addListener((_reason) => {
         title: 'Turn cursor ON', 
         id: 'toggle-cursor',
     });
+
+    // set default values
+    chrome.storage.sync.get(['selectedColor'], (result) => {
+        console.log("get", result);
+        if (!result?.selectedColor) {
+            chrome.storage.sync.set({selectedColor: "tomato"}, (result) => {
+                console.log("set", result);
+            });
+        }
+    });
 }); 
 
 // handle context menus events
@@ -21,6 +31,19 @@ chrome.commands.onCommand.addListener(async (command) => {
             toggleHighlighter("", tab);
             break;
         default:
+            break;
+    }
+});
+
+// listen messages from content scripts
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    switch (message.task) {
+        case "CHANGE_COLOR":
+            changeColor(message.data);
+            sendResponse({res: "SUCCESS"});
+            break;
+        default:
+            sendResponse({res: "ERROR"});
             break;
     }
 });
@@ -43,4 +66,11 @@ function toggleHighlighter(info, tab) {
             }
         }
     );
+}
+
+// change color
+function changeColor(value) {
+    chrome.storage.sync.set({ selectedColor: value }, (result) => {
+        console.log(result);
+    });
 }

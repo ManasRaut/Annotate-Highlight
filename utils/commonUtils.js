@@ -21,4 +21,13 @@ function setDefaultValues() {
         window.HIGHLIGHTER_INIT = true;
         window.highlighterTurnedOn = false;
     }
+
+    chrome.storage.sync.get(['selectedColor'], (result) => {
+        console.log("get", result);
+        if (!result?.selectedColor) {
+            chrome.storage.sync.set({selectedColor: "tomato"}, (result) => {
+                console.log("set", result);
+            });
+        }
+    });
 }
