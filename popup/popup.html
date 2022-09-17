@@ -18,13 +18,11 @@
     <div class="section-block">
         <div class="add-btn add-btn-off" id="addHighlight">New</div>
     </div>
+    <div id="error-msg" style="display:none;color:red;">could'nt start highligther</div>
     <div class="section">
         <div class="section-title">Select color</div>
         <div class="color-list">
-            <div class="color-button selectedColor" id="redcolor" data-color="tomato"></div>
-            <div class="color-button" id="greencolor" data-color="#66ff47"></div>
-            <div class="color-button" id="bluecolor" data-color="#47b5ff"></div>
-            <div class="color-button" id="yellowcolor" data-color="#ffc547"></div>
+            
         </div>
     </div>
     <div class="section-block">
@@ -45,6 +43,7 @@
     </div>
 
     <script src="popup.js"></script>
-    <script src="../utils/constants.js"></script>
+    <script src="../contentScripts/common.js"></script>
+    <script src="../contentScripts/constants.js"></script>
 </body>
 </html>

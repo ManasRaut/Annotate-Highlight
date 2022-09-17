@@ -5,75 +5,89 @@ const ADDBUTTON_OFF_CLASS = "add-btn add-btn-off";
 // DOM references
 const toggleExtensionOnorOffButton = document.getElementById("toggleExtension");
 const addNewHighlightBtn = document.getElementById("addHighlight");
-const listBox = document.getElementById("listBox");
 
-var highlightsList = [];
-var selectedColor = 'tomato';
-var selectedColorId = 'redcolor';
+var colorsList = [];
+var selectedColor = "";
+var selectedColorId = "";
 
-toggleExtensionOnorOffButton.addEventListener("click", (_event) => {
-    chrome.storage.sync.set({extensionStatus: _event.target.checked});
-});
 
-addNewHighlightBtn.addEventListener("click", (_event) => {
-    toggleHighlighter();
-});
-
-[...document.getElementsByClassName("color-button")].forEach(element => {
-    element.addEventListener("click", changeColor);
-});
-
-chrome.storage.sync.get(['selectedColor'], (result) => {
-    if (result?.selectedColor) {
-        let oldNode = document.querySelector(`[data-color="${selectedColor}"]`);
-        let newNode = document.querySelector(`[data-color="${result.selectedColor}"]`);
-        oldNode.classList.remove("selectedColor");
-        newNode.classList.add("selectedColor");
-        selectedColor = result.selectedColor;
-        selectedColorId = newNode.id;
+window.onload = async () => {
+    // get colors from storage, if not present load default colors
+    colorsList = DEFAULT_COLORS;
+    selectedColor = DEFAULT_COLORS[0];
+    selectedColorId = `${DEFAULT_COLORS[0]}Id`;
+    let result = await getFromStorage("colorsList");
+    if (result.colorsList) {
+        colorsList = result.colorsList;
     }
-});
 
-function changeColor(_event) {
-    const newColor = _event.target.dataset.color;
-    chrome.runtime.sendMessage(
-        message={
-            task: CHANGE_COLOR,
-            data: newColor
-        },
-        (response) => {
-            if (response.res === SUCCESS) {
-                document.getElementById(selectedColorId).classList.remove("selectedColor");
-                document.getElementById(_event.target.id).classList.add("selectedColor");
-                selectedColor = newColor;
-                selectedColorId = _event.target.id;
-            }
+    // create color option for all colors
+    colorsList.forEach(c => {
+        const newColorOption = document.createElement("div");
+        newColorOption.setAttribute("class", "color-button");
+        newColorOption.setAttribute("id", `${c}Id`);
+        newColorOption.setAttribute("data-color", c);
+        newColorOption.style.backgroundColor = c;
+        newColorOption.addEventListener("click", changeColor);
+        document.getElementsByClassName("color-list")[0].appendChild(newColorOption);
+    });
+
+    // and select selected color
+    result = await getFromStorage("selectedColor");
+    if (result.selectedColor) {
+        selectedColor = result.selectedColor;
+    }
+    selectedColorId = `${selectedColor}Id`;
+    document.getElementById(`${selectedColor}Id`).setAttribute("class", "color-button selectedColor");
+
+    // check is highlihghter already on if yes then show it is on
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage( tabs[0].id, {
+                task: IS_HIGHLIGHTER_ON,
+            }, (response) => {
+                if (response.res == HIGHIGHTER_ON) {
+                    addNewHighlightBtn.className = ADDBUTTON_ON_CLASS;
+                    addNewHighlightBtn.innerText = "Turn off";
+                }
+            });
         }
     );
 }
 
-function toggleHighlighter() {
+// toggle highlighter on or off
+addNewHighlightBtn.addEventListener("click", (_event) => {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        console.log(tabs)
         chrome.tabs.sendMessage( tabs[0].id, {
                 task: TOGGLE_HIGHLIGHTER,
-            }, (response) => handleResponse(response)
+            }, (response) => {
+                switch(response.res) {
+                    case HIGHIGHTER_ON:
+                        addNewHighlightBtn.className = ADDBUTTON_ON_CLASS;
+                        addNewHighlightBtn.innerText = "Turn off";
+                        document.getElementById("error-msg").style.display = "none";
+                        break;
+                    case HIGHIGHTER_OFF:
+                        addNewHighlightBtn.className = ADDBUTTON_OFF_CLASS;
+                        addNewHighlightBtn.innerText = "New";
+                        document.getElementById("error-msg").style.display = "none";
+                        break;
+                    case ERROR:
+                        document.getElementById("error-msg").style.display = "block";
+                        break;
+                    default:
+                        break;
+                }
+            }
         );
     });
-}
+});
 
-function handleResponse(response) {
-    switch(response.res) {
-        case HIGHLIGHTER_TURNED_ON:
-            addNewHighlightBtn.className = ADDBUTTON_ON_CLASS;
-            break;
-        case HIGHLIGHTER_TURNED_OFF:
-            addNewHighlightBtn.className = ADDBUTTON_OFF_CLASS;
-            break;
-        case ERROR:
-            // TODO : add error message in popup
-            break;
-        default:
-            break;
-    }
+// change color in storage
+function changeColor(_event) {
+    const newColor = _event.target.dataset.color;
+    setInStorage("selectedColor", newColor);    
+    document.getElementById(selectedColorId).setAttribute("class", "color-button");
+    document.getElementById(_event.target.id).setAttribute("class", "color-button selectedColor");  
+    selectedColor = newColor;
+    selectedColorId = _event.target.id;
 }

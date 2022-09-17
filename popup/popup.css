@@ -39,18 +39,7 @@ html {
 .color-button:hover {
     box-shadow: 2px 2px 8px 1px rgb(180, 180, 180);
 }
-#redcolor {
-    background-color: tomato;
-}
-#yellowcolor {
-    background-color: rgb(255, 197, 71);
-}
-#bluecolor {
-    background-color: rgb(71, 181, 255);
-}
-#greencolor {
-    background-color: rgb(102, 255, 71);
-}
+
 #searchInput {
     border: 1px solid lightgray;
     margin: 8px 0px;
