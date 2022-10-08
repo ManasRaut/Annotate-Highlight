@@ -253,3 +253,42 @@ function createHuePicker(parent, callback, initialHue = 0) {
     }
   }
 }
+
+
+function getCSSQuery(node) {
+  // if it has id stop search and return
+  if (node.id) return `#${node.id.replace(/(:)/ug, "\\$1")}`;
+  // if we have reached end html node
+  if (node.localName == 'html') return 'html';
+
+  let parent = node.parentNode;
+  let parentQuery = getCSSQuery(parent);
+
+  // get index of node in DOM
+  // if it is a text node
+  if (!node.localName) {
+    const index = Array.prototype.indexOf.call(parent.childNodes, node);
+    return `${parentQuery}>textNode:nth-of-type(${index})`;
+  } else {
+    const index = Array.from(parent.childNodes).filter((child) => child.localName === node.localName).indexOf(node) + 1;
+    return `${parentQuery}>${node.localName}:nth-of-type(${index})`;
+  }
+}
+
+function getElementFromQuery(query) {
+  // check if it ends with text node
+  const re = />textNode:nth-of-type\(([0-9]+)\)$/ui; // re used from someone else code
+  const result = re.exec(query);
+
+  if (result) {
+    // for text node remove it from 
+        const index = parseInt(result[1], 10);
+        query = query.replace(re, "");
+        const parent = document.querySelector(query);
+
+        if (!parent) return undefined;
+        return parent.childNodes[index];
+    }
+
+    return document.querySelector(query);
+}
