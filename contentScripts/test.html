@@ -6,14 +6,106 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .HIGHLIGHT_CONTEXTMENU {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    background-color: lightgray;
+    padding: 8px;
+    display: flex;
+    border-radius: 8px;
+    box-shadow: 3px 4px 2px 1px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+.HIGHLIGHT_CONTEXTMENU::after {
+    width: 0px;
+    height: 0px;
+    content: "";
+    position: absolute;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid lightgray;
+    border-bottom: 8px solid transparent;
+    left: 32px;
+    bottom: -14px;
+    border-radius: 8px;
+}
+.HIGHLIGHT_CONTEXTMENU_BUTTON {
+    width: 26px;
+    cursor: pointer;
+    height: 26px;
+    margin: 2px 8px 0px 8px;
+    display: block;
+}
+#HIGHLIGHT_CONTEXTMENU_CHANGECOLOR_BTN {
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image:url('../images/colorPalleteIcon.svg');
+}
+
+#HIGHLIGHT_CONTEXTMENU_DELETE_BTN {
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(-2px -2px 2px #000);
+    background-image: url('../images/deleteIcon.svg');
+}
+        /* .HIGHLIGHT_CONTEXTMENU {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            background-color: lightgray;
+            padding: 8px;
+            display: flex;
+            border-radius: 8px;
+            box-shadow: 3px 4px 2px 1px rgba(0, 0, 0, 0.4);
+        }
+        .HIGHLIGHT_CONTEXTMENU::after {
+            width: 0px;
+            height: 0px;
+            content: "";
+            position: absolute;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid lightgray;
+            border-bottom: 8px solid transparent;
+            left: 32px;
+            bottom: -14px;
+            border-radius: 8px;
+        }
+
+        .HIGHLIGHT_CONTEXTMENU_BUTTON > img{
+            width: 16px;
+            cursor: pointer;
+            height: 16px;
+            margin: 2px 8px 0px 8px;
+        } */
+    </style>
 </head>
 
 <body>
+    <!-- <div class="HIGHLIGHT_CONTEXTMENU">
+        <div class="HIGHLIGHT_CONTEXTMENU_BUTTON">
+            <img src="../images/colorPalleteIcon.svg" alt="color"/>
+        </div>
+        <div class="HIGHLIGHT_CONTEXTMENU_BUTTON">
+            <img src="../images/deleteIcon.svg" alt="delete"/>
+        </div>
+    </div> -->
     <!-- <pre> -->
     <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat facilis praesentium doloremque obcaecati quas
         iste consequuntur dolore. Rem vero quasi, est excepturi non, cupiditate dolorum voluptate quisquam quia, et
         consequuntur?
+        <div class="HIGHLIGHT_CONTEXTMENU">
+            <div class="demo-image"></div>
+            <div class="HIGHLIGHT_CONTEXTMENU_BUTTON" id="HIGHLIGHT_CONTEXTMENU_CHANGECOLOR_BTN">
+            </div>
+            <div class="HIGHLIGHT_CONTEXTMENU_BUTTON" id="HIGHLIGHT_CONTEXTMENU_DELETE_BTN">
+            </div>
+        </div>
 
         <div>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus doloribus nobis inventore non corporis ea

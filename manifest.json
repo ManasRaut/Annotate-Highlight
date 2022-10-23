@@ -23,7 +23,11 @@
           "js": [
                 "contentScripts/common.js",
                 "contentScripts/constants.js",
-                "contentScripts/highlight.js"
+                "contentScripts/highlight.js",
+                "contentScripts/highlightMenu.js"
+            ],
+            "css": [
+                "contentScripts/highlightMenu.css"
             ]
         }
     ],
@@ -39,7 +43,9 @@
                 "<all_urls>"
             ],
             "resources": [
-                "images/*.png"
+                "images/*.png",
+                "images/*.svg",
+                "contentScripts/highlightMenu.html"
             ]
         }
     ],

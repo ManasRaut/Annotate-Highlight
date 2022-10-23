@@ -1,7 +1,7 @@
 var selectedColor = DEFAULT_COLORS[0];
 var colorsList = DEFAULT_COLORS;
 
-window.onload = async () => {
+window.addEventListener("load", async () => {
     // get values from storage and set default values
     let result = await getFromStorage("colorsList");
     if (result.colorsList) {
@@ -11,7 +11,7 @@ window.onload = async () => {
     window.highlighterTurnedOn = false;
 
     loadHighlightsOnStart();
-}
+});
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -96,6 +96,12 @@ async function highlight(color) {
     };
   
     recursiveHighlight(container, info, 0, false);
+    // add hover to highlights
+    container.querySelectorAll('.HIGHLIGHT_TEXT').forEach((el, _i) => {
+        el.addEventListener('mouseenter', onHighlightMouseEnterOrClick);
+        el.addEventListener('click', onHighlightMouseEnterOrClick);
+        el.addEventListener('mouseleave', onHighlightMouseLeave);
+    });
     // remove selection
     selection.removeAllRanges();
 
@@ -129,17 +135,30 @@ async function loadHighlightsOnStart() {
         
         // highlight each value
         myHighlights.map((myObj) => {
-            let info = {
-                uuid: myObj.uuid,
-                selectionString: myObj.selectionString,
-                selectionLength: myObj.selectionString.length,
-                startNode: getElementFromQuery(myObj.startNode),
-                endNode: getElementFromQuery(myObj.endNode),
-                startOffset: myObj.startOffset,
-                endOffset: myObj.endOffset,
-                color: myObj.color,
-            };
-            recursiveHighlight(getElementFromQuery(myObj.container), info, 0, false);
+            try {
+                // highlight
+                let info = {
+                    uuid: myObj.uuid,
+                    selectionString: myObj.selectionString,
+                    selectionLength: myObj.selectionString.length,
+                    startNode: getElementFromQuery(myObj.startNode),
+                    endNode: getElementFromQuery(myObj.endNode),
+                    startOffset: myObj.startOffset,
+                    endOffset: myObj.endOffset,
+                    color: myObj.color,
+                };
+                recursiveHighlight(getElementFromQuery(myObj.container), info, 0, false);
+
+                // add event listeners
+                const container = getElementFromQuery(myObj.container);
+                container.querySelectorAll('.HIGHLIGHT_TEXT').forEach((el, _i) => {
+                    el.addEventListener('mouseenter', onHighlightMouseEnterOrClick);
+                    el.addEventListener('click', onHighlightMouseEnterOrClick);
+                    el.addEventListener('mouseleave', onHighlightMouseLeave);
+                });
+            } catch (err) {
+                console.error('Error in loading highlights');
+            }
         });
     }
 }
@@ -209,6 +228,7 @@ function recursiveHighlight(element, info, charsdone, startFound) {
             highlightNode.textContent = middlePart.nodeValue;
             highlightNode.classList.add("HIGHLIGHT_TEXT");
             highlightNode.classList.add(`HIGHLIGHTID_${info.uuid}`);
+            highlightNode.setAttribute('data-highlight-id', info.uuid);
             // insert highlightNode before selected part
             middlePart.parentNode.insertBefore(highlightNode, middlePart);
             // remove old selected part
