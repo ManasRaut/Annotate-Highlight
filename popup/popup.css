@@ -76,6 +76,9 @@ html {
 .list-name {
     flex: 1;
     margin: 0px 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .list-options {
     display: flex;
@@ -86,9 +89,23 @@ html {
     margin: 0px 2px;
     border-radius: 2px;
     cursor: pointer;
+    width: 20px;
+    height: 20px;
 }
 .list-btns:hover {
     background-color: rgb(233, 233, 233);
+}
+.delete-h-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/deleteIcon.svg');
+}
+.copy-h-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/copyIcon.svg');
 }
 
 
@@ -164,4 +181,15 @@ input:checked + .slider:before {
 .selectedColor {
     box-shadow: 2px 2px 8px 1px rgb(180, 180, 180);
     border: 1px solid dodgerblue;
+}
+/* TODO (temp): css to add delete all button later */
+.searchbox-cont {
+    display: flex;
+}
+.delete-all-btn {
+    padding: 4px 8px;
+    margin: 0px 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: rgb(131, 131, 131);
 }

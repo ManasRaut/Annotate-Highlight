@@ -51,7 +51,7 @@ function setInStorage(key, value) {
     const data = {};
     data[key] = value;
     chrome.storage.sync.set(data, (result) => {
-        console.log(key, "set", value, ":", result);
+        // console.log(key, "set", value, ":", result);
     });
 }
 

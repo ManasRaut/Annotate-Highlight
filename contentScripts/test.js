@@ -61,7 +61,7 @@ function highlight(color) {
     color: color,
   };
 
-  console.log(recursiveHighlight(container, info, 0, false));
+  // console.log(recursiveHighlight(container, info, 0, false));
   // remove selection
   selection.removeAllRanges();
 }

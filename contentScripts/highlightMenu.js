@@ -1,37 +1,55 @@
 var highlightClicked = false;
 var highlightHoverTimeout = null;
 var currentHighlightEl = null;
-var changeColorButton = null;
 var deleteButton = null;
+var copyButton = null;
 
 window.addEventListener("load", () => {
     // get html and append it to end of page body
     fetch(chrome.runtime.getURL('contentScripts/highlightMenu.html')).then((response) => {
         return response.text();
     }).then((htmlData) => {
+        // create new hover element and add fetched content
         const newElement = document.createElement("div");
         newElement.innerHTML = htmlData;
         newElement.classList.add("HIGHLIGHT_CONTEXTMENU");
         newElement.style.display = "none";
+        // attach eventListeners and get references to HTML buttons
         newElement.addEventListener('mouseenter', onHoverToolMouseEnter);
         newElement.addEventListener('mouseleave', onHighlightMouseLeave);
         document.getElementsByTagName('body')[0].appendChild(newElement);
-        changeColorButton = newElement.querySelector('#HIGHLIGHT_CONTEXTMENU_CHANGECOLOR_BTN');
         deleteButton = newElement.querySelector('#HIGHLIGHT_CONTEXTMENU_DELETE_BTN');
-        changeColorButton.addEventListener("click", changeColor);
-        deleteButton.addEventListener("click", deleteHighlight);
+        copyButton = newElement.querySelector('#HIGHLIGHT_CONTEXTMENU_COPY_BTN');
+        deleteButton.addEventListener("click", () => deleteHighlight(currentHighlightEl.getAttribute("data-highlight-id")));
+        copyButton.addEventListener("click", () => copyHighlight(currentHighlightEl.getAttribute("data-highlight-id")));
     }).catch((err) => {
         console.error(err);
         console.warn("Highlighter extension: something went wrong !");
     });
 });
 
-function changeColor(_event) {
-    console.log("hellow")
+function deleteHighlight(highlightId) {
+    // find all nodes with uuid of selected element
+    const highlightEls = document.querySelectorAll(`.HIGHLIGHTID_${highlightId}`);
+    // replace this elements with text nodes
+    for(let i=0; i<highlightEls.length; i++) {
+        const tmpNode = highlightEls[i];
+        const tmpTextNode = document.createTextNode(tmpNode.textContent);
+        tmpNode.parentNode.insertBefore(tmpTextNode, tmpNode);
+        tmpNode.parentNode.normalize();
+        tmpNode.remove();
+    }
+    // update new highlight list
+    const newHighlistList = highlightsList.filter((h, _i) => h.uuid !== highlightId);
+    setInStorage("highlightsList", newHighlistList);
+    onHighlightMouseLeave({});
 }
 
-function deleteHighlight(_event) {
-    console.log("hdeefa")
+function copyHighlight(highlightId) {
+    // copy selecionString from saved highlights list
+    const highlight = highlightsList.find((h, _i) => h.uuid === highlightId);
+    navigator.clipboard.writeText(highlight.selectionString);
+    onHighlightMouseLeave({});    
 }
 
 function onHoverToolMouseEnter() {
@@ -41,13 +59,13 @@ function onHoverToolMouseEnter() {
     }
 }
 
-function onHighlightMouseLeave() {
+function onHighlightMouseLeave(e) {
     if (!highlightClicked) {
         highlightHoverTimeout = setTimeout(() => {
             document.getElementsByClassName("HIGHLIGHT_CONTEXTMENU")[0].style.display = "none";
             highlightHoverTimeout = null;
             highlightClicked = false;
-        }, 170);
+        }, 270);
     }
 }
 
@@ -71,7 +89,7 @@ function onHighlightMouseEnterOrClick(e) {
 
 function moveToolbarToHighlight(highlightEl, cursorX) {
     const boundingRect = highlightEl.getBoundingClientRect();
-    const toolWidth = 100;
+    const toolWidth = 148;
     const hoverTop = boundingRect.top - 45 + window.scrollY;
     const hoverToolEl = document.getElementsByClassName("HIGHLIGHT_CONTEXTMENU")[0];
     hoverToolEl.style.top = `${hoverTop}px`;

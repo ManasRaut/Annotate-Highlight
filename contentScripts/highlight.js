@@ -1,5 +1,6 @@
 var selectedColor = DEFAULT_COLORS[0];
 var colorsList = DEFAULT_COLORS;
+var highlightsList = [];
 
 window.addEventListener("load", async () => {
     // get values from storage and set default values
@@ -32,6 +33,10 @@ chrome.runtime.onMessage.addListener(
                     sendResponse({res: HIGHIGHTER_OFF});
                 }
                 break;
+            case DELETE_HIGHLIGHT:
+                deleteHighlight(request.uuid);
+                sendResponse({res: SUCCESS});
+                break;
             default:
                 sendResponse({res: ERROR});
                 break;
@@ -61,7 +66,7 @@ async function getColor() {
 }
 
 async function mouseUp(_event) {
-    console.log("mouse up")
+    // console.log("mouse up")
     await getColor();
     highlight(selectedColor);
 }
@@ -123,12 +128,14 @@ async function highlight(color) {
     if (result.highlightsList) hList = result.highlightsList;
     hList.push(highlightObj);
     setInStorage("highlightsList", hList);
+    highlightsList = hList;
 }
 
 // load all saved highlights for current url
 async function loadHighlightsOnStart() {
     const result = await getFromStorage("highlightsList");
     if (result.highlightsList) {
+        highlightsList = result.highlightsList;
         const myUrl = window.location.hostname + window.location.pathname;
         // filter highlights for this page
         const myHighlights = result.highlightsList.filter((h) => h.url == myUrl);
@@ -216,6 +223,9 @@ function recursiveHighlight(element, info, charsdone, startFound) {
     
                 i++;
             }
+
+            // if inside already highlighted span then stop
+            if (child.parentNode.classList.contains("HIGHLIGHT_TEXT")) return [charsdone, startFound];
     
             // split child node in three parts:
             let beforePart = child; // before selected part

@@ -18,7 +18,7 @@
     border-right: 8px solid transparent;
     border-top: 8px solid lightgray;
     border-bottom: 8px solid transparent;
-    left: 32px;
+    left: 60px;
     bottom: -14px;
     border-radius: 8px;
 }
@@ -31,16 +31,17 @@
 .HIGHLIGHT_CONTEXTMENU_BUTTON:hover {
     filter: drop-shadow(2px 2px 2px #666);
 }
-#HIGHLIGHT_CONTEXTMENU_CHANGECOLOR_BTN {
-    background-size: 20px 20px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image:url('chrome-extension://__MSG_@@extension_id__/images/colorPalleteIcon.svg');
-}
 
 #HIGHLIGHT_CONTEXTMENU_DELETE_BTN {
     background-size: 20px 20px;
     background-repeat: no-repeat;
     background-position: center;
     background-image: url('chrome-extension://__MSG_@@extension_id__/images/deleteIcon.svg');
+}
+
+#HIGHLIGHT_CONTEXTMENU_COPY_BTN {
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/copyIcon.svg');
 }
