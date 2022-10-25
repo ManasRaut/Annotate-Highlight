@@ -24,10 +24,12 @@
                 "contentScripts/common.js",
                 "contentScripts/constants.js",
                 "contentScripts/highlight.js",
-                "contentScripts/highlightMenu.js"
+                "contentScripts/highlightMenu.js",
+                "contentScripts/annotation.js"
             ],
             "css": [
-                "contentScripts/highlightMenu.css"
+                "contentScripts/highlightMenu.css",
+                "contentScripts/annotation/annotation.css"
             ]
         }
     ],
@@ -45,7 +47,8 @@
             "resources": [
                 "images/*.png",
                 "images/*.svg",
-                "contentScripts/highlightMenu.html"
+                "contentScripts/highlightMenu.html",
+                "contentScripts/annotation/annotation.html"
             ]
         }
     ],

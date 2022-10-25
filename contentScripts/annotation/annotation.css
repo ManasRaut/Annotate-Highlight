@@ -1,0 +1,113 @@
+.annotation-cont {
+    position: absolute;
+    background-color: wheat;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.4);
+    border-radius: 0px 4px 4px 4px;
+}
+
+.annotation-cont::before {
+    width: 0px;
+    height: 0px;
+    content: "";
+    position: absolute;
+    border-top: 8px solid rgb(243, 210, 149);
+    border-left: 8px solid transparent;
+    border-right: 8px solid rgb(243, 210, 149);
+    border-bottom: 8px solid transparent;
+    left: -10px;
+    top: 0px;
+    border-radius: 8px;
+}
+
+.annotation-header {
+    background-color: rgb(243, 210, 149);
+    display: flex;
+    justify-content: end;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.annotation-header-btn {
+    padding: 4px 8px;
+    margin: 0px 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.annotation-header-btn:hover {
+    background-color: rgb(243, 186, 79);
+}
+
+.annotation-delete-btn {
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/deleteIcon.svg');
+}
+
+.annotation-close-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/closeIcon.svg');
+}
+
+.annotation-body> ::-webkit-scrollbar {
+    width: 5px;
+    cursor: pointer;
+}
+
+.annotation-body> ::-webkit-scrollbar-track {
+    background-color: wheat;
+}
+
+.annotation-body> ::-webkit-scrollbar-thumb {
+    background-color: rgb(77, 68, 53);
+    border-radius: 4px;
+}
+
+.annotation-editbox {
+    background-color: wheat;
+    border: none;
+    padding: 0px;
+    min-width: 200px;
+    min-height: 40px;
+    outline: none;
+    max-width: 500px;
+    max-height: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-y: auto;
+    overflow-x: none;
+}
+
+.annotation-body {
+    min-width: 200px;
+    min-height: 40px;
+    max-width: 500px;
+    max-height: 300px;
+    padding: 4px;
+}
+
+.annotation-cursor {
+    position: absolute;
+    width: 25px;
+    height: 20px;
+    background-image: url('chrome-extension://__MSG_@@extension_id__/images/noteIcon.svg');
+    background-size: 25px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    filter: drop-shadow(2px 2px 2px #666);
+    transition: width 0.2s;
+    transition: height 0.2s;
+    transition: background-size 0.2s;
+    cursor: pointer;
+}
+.annotation-cursor:hover {
+    width: 30px;
+    height: 25px;
+    background-size: 30px 25px;
+    filter: drop-shadow(4px 4px 2px #666);
+}

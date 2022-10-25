@@ -49,6 +49,7 @@ function turnOnHighlighter() {
     document.body.style.cursor = `url(${chrome.runtime.getURL('images/cursor.png')}), auto`;
     document.addEventListener("mouseup", mouseUp);
     window.highlighterTurnedOn = true;
+    window.annotationTurnedOn = false;
 }
 
 // turn off highlighter by making cursor default and remove any mouseup event listeners
