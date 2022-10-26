@@ -10,7 +10,7 @@ window.addEventListener("load", () => {
         // create annotation edit box
         editBox = document.createElement("div");
         editBox.classList.add("annotation-cont");
-        // editBox.style.display = "none";
+        editBox.style.display = "none";
         editBox.innerHTML = htmlData;
         document.getElementsByTagName('body')[0].appendChild(editBox);
         

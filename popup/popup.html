@@ -8,14 +8,6 @@
     <link rel="stylesheet" type="text/css" href="popup.css">
 </head>
 <body>
-    <!-- TODO : To disable extension for particular page -->
-    <!-- <div class="header">
-        Toggle extension On or Off: 
-        <label class="switch">
-            <input id="toggleExtension" type="checkbox" checked="true">
-            <span class="slider round"></span>
-        </label>
-    </div> -->
     <div class="section-block">
         <div class="add-btn add-btn-off" id="addHighlight">New</div>
     </div>
@@ -26,8 +18,29 @@
             
         </div>
     </div>
-    <div class="section-block">
-        <div class="section-title">Annotations & Highlights:</div>
+    <div class="tabs-section">
+        <div class="tabs-button" id="highlight-btn">Highlights</div>
+        <div class="tabs-button" id="annotation-btn">Annotations</div>
+    </div>
+    <div class="section-block" id="annotation-section">
+        <div class="section-title">Annotations:</div>
+        <div>
+            <input type="text" id="searchInput" placeholder="Search annotations... ">
+        </div>
+        <div class="annotation-list-box" id="annotation-listBox">
+            <!-- TODO (INFO) : List item html format -->
+            <!-- <div class="list-item">
+                <div class="list-colorbox"></div>
+                <div class="list-name">Clafefeaf.....</div>
+                <div class="list-options">
+                    <div class="list-btns copy-h-btn"></div>
+                    <div class="list-btns delete-h-btn"></div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="section-block" id="highlight-section">
+        <div class="section-title">Highlights:</div>
         <div>
             <input type="text" id="searchInput" placeholder="Search highlights... ">
         </div>

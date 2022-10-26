@@ -5,6 +5,8 @@ const ADDBUTTON_OFF_CLASS = "add-btn add-btn-off";
 // DOM references
 const toggleExtensionOnorOffButton = document.getElementById("toggleExtension");
 const addNewHighlightBtn = document.getElementById("addHighlight");
+const annotationSection = document.getElementById("annotation-section");
+const highlightSection = document.getElementById("highlight-section");
 
 var colorsList = [];
 var selectedColor = "";
@@ -12,10 +14,12 @@ var selectedColorId = "";
 var highlightsList = [];
 var listBox = null;
 var tab = "";
+var visibleSection = "HIGHLIGHT_SECTION";
 
 window.onload = async () => {
     // get html references
     listBox = document.getElementById("listBox");
+    annotationSection.style.display = "none";
 
     // get url and other details for current tab
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -92,6 +96,30 @@ addNewHighlightBtn.addEventListener("click", (_event) => {
             }
         );
     });
+});
+
+// add tab event listeners
+document.getElementById("highlight-btn").addEventListener("click", () => {
+    if (visibleSection !== "HIGHLIGHT_SECTION") {
+        highlightSection.style.display = "block";
+        annotationSection.style.display = "none";
+        document.getElementById("highlight-btn").style.boxShadow = "0px 2px 4px 1px #b4b4b4";
+        document.getElementById("highlight-btn").style.backgroundColor = "white";
+        document.getElementById("annotation-btn").style.boxShadow = "none";
+        document.getElementById("annotation-btn").style.backgroundColor = "#f3f3f3";
+        visibleSection = "HIGHLIGHT_SECTION";
+    }
+});
+document.getElementById("annotation-btn").addEventListener("click", () => {
+    if (visibleSection !== "ANNOTATION_SECTION") {
+        annotationSection.style.display = "block";
+        highlightSection.style.display = "none";
+        document.getElementById("annotation-btn").style.boxShadow = "0px 2px 4px 1px #b4b4b4";
+        document.getElementById("annotation-btn").style.backgroundColor = "white";
+        document.getElementById("highlight-btn").style.boxShadow = "none";
+        document.getElementById("highlight-btn").style.backgroundColor = "#f3f3f3";
+        visibleSection = "ANNOTATION_SECTION";
+    }
 });
 
 // change color in storage

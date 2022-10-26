@@ -193,3 +193,28 @@ input:checked + .slider:before {
     cursor: pointer;
     background-color: rgb(131, 131, 131);
 }
+
+.tabs-section {
+    margin: 4px 0px -4px 0px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    justify-content: center;
+}
+
+.tabs-button {
+    padding: 12px 12px;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+.tabs-button:hover {
+    background-color: #f3f3f3;
+}
+#highlight-btn {
+    border-right: 1px solid lightgray;
+    box-shadow: 0px 2px 4px 1px #b4b4b4;
+}
+#annotation-btn {
+    background-color: #f3f3f3;
+}
