@@ -37,6 +37,18 @@ chrome.runtime.onMessage.addListener(
                 deleteHighlight(request.uuid);
                 sendResponse({res: SUCCESS});
                 break;
+            case ADD_ANNOTATION:
+                addAnnotation();
+                sendResponse({res: SUCCESS});
+                break;
+            case DELETE_ANNOTATION:
+                deleteAnnotation(request.uuid);
+                sendResponse({res: SUCCESS});
+                break;
+            case EDIT_ANNOTATION:
+                editAnnotation(request.uuid);
+                sendResponse({res: SUCCESS});
+                break;
             default:
                 sendResponse({res: ERROR});
                 break;

@@ -57,7 +57,7 @@ async function deleteAnnotation(uuid) {
     const newAnnotationList = annotationList.filter((a) => a.uuid !== uuid);
     annotationList = newAnnotationList;
     setInStorage("annotationList", newAnnotationList);
-    document.querySelector(`.ANNOTATION_${uuid}`).remove();
+    document.querySelector(`.ANNOTATION_${uuid}`)?.remove();
     editBox.style.display = "none";
     currentAnnotateCursor = null;
     currentAnnotation = null;

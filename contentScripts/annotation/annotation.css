@@ -80,6 +80,7 @@
     word-wrap: break-word;
     overflow-y: auto;
     overflow-x: none;
+    color : black;
 }
 
 .annotation-body {

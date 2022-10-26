@@ -11,27 +11,6 @@ window.addEventListener("contextmenu", (_event) => {
     clickPageY = _event.pageY;
 });
 
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        switch(request.task) {    
-            case ADD_ANNOTATION:
-                addAnnotation();
-                sendResponse({res: SUCCESS});
-                break;
-            case DELETE_ANNOTATION:
-                deleteAnnotation(request.uuid);
-                sendResponse({res: SUCCESS});
-                break;
-            case EDIT_ANNOTATION:
-                editAnnotation(request.uuid);
-                sendResponse({res: SUCCESS});
-            default:
-                sendResponse({res: ERROR});
-                break;
-        }
-    }
-);
-
 async function addAnnotation() {
     const result = await getFromStorage("annotationList");
     if (result.annotationList) annotationList = result.annotationList;
@@ -64,13 +43,16 @@ async function loadAllAnnotations() {
     if (result.annotationList) annotationList = result.annotationList;
 
     annotationList.forEach((a) => {
-        const newAnnotateCursor = document.createElement("div");
-        newAnnotateCursor.classList.add("annotation-cursor");
-        newAnnotateCursor.classList.add(`ANNOTATION_${a.uuid}`);
-        newAnnotateCursor.style.left = `${a.pageX}px`;
-        newAnnotateCursor.style.top = `${a.pageY-25}px`;
-        newAnnotateCursor.addEventListener("click", () => editAnnotation(a.uuid));
-        newAnnotateCursor.setAttribute("data-annotate-id", a.uuid);
-        document.getElementsByTagName("body")[0].appendChild(newAnnotateCursor);
+        const myUrl = window.location.hostname + window.location.pathname;
+        if (a.url === myUrl) {
+            const newAnnotateCursor = document.createElement("div");
+            newAnnotateCursor.classList.add("annotation-cursor");
+            newAnnotateCursor.classList.add(`ANNOTATION_${a.uuid}`);
+            newAnnotateCursor.style.left = `${a.pageX}px`;
+            newAnnotateCursor.style.top = `${a.pageY-25}px`;
+            newAnnotateCursor.addEventListener("click", () => editAnnotation(a.uuid));
+            newAnnotateCursor.setAttribute("data-annotate-id", a.uuid);
+            document.getElementsByTagName("body")[0].appendChild(newAnnotateCursor);
+        }
     });
 }
