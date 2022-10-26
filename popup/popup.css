@@ -107,7 +107,18 @@ html {
     background-position: center;
     background-image: url('../images/copyIcon.svg');
 }
-
+.annotate-delete-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/deleteIcon.svg');
+}
+.annotate-edit-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/editIcon.svg');
+}
 
 .switch {
     position: relative;

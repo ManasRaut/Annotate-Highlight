@@ -25,7 +25,8 @@
                 "contentScripts/constants.js",
                 "contentScripts/highlight.js",
                 "contentScripts/highlightMenu.js",
-                "contentScripts/annotation.js"
+                "contentScripts/annotation.js",
+                "contentScripts/annotation/annotationEditBox.js"
             ],
             "css": [
                 "contentScripts/highlightMenu.css",

@@ -12,13 +12,16 @@ var colorsList = [];
 var selectedColor = "";
 var selectedColorId = "";
 var highlightsList = [];
-var listBox = null;
+var annotationList = [];
+var highlightListBox = null;
+var annotationListBox = null;
 var tab = "";
 var visibleSection = "HIGHLIGHT_SECTION";
 
 window.onload = async () => {
     // get html references
-    listBox = document.getElementById("listBox");
+    highlightListBox = document.getElementById("listBox");
+    annotationListBox = document.getElementById("annotation-listBox");
     annotationSection.style.display = "none";
 
     // get url and other details for current tab
@@ -55,6 +58,7 @@ window.onload = async () => {
     document.getElementById(`${selectedColor}Id`).setAttribute("class", "color-button selectedColor");
 
     await loadAllHighlights();
+    await loadAllAnnotations();
 
     // check is highlihghter already on if yes then show it is on
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -134,8 +138,8 @@ function changeColor(_event) {
 
 // reload all saved highlights
 async function loadAllHighlights() {
-    while (listBox.firstChild) {
-        listBox.removeChild(listBox.firstChild);
+    while (highlightListBox.firstChild) {
+        highlightListBox.removeChild(highlightListBox.firstChild);
     }
     const result = await getFromStorage('highlightsList');
     if (result.highlightsList) {
@@ -155,7 +159,7 @@ async function loadAllHighlights() {
                 <div class="list-btns delete-h-btn"></div>
             </div>
         `;
-        listBox.appendChild(listItem);
+        highlightListBox.appendChild(listItem);
     }
     document.querySelectorAll(".copy-h-btn").forEach((button) => {
         button.addEventListener("click", () => {
@@ -179,6 +183,50 @@ function highlightAction(action, uuid) {
     }, (response) => {
         if (response.res === SUCCESS) {
             loadAllHighlights();
+        }
+    });
+}
+
+// ------------------ annotations ---------------------
+
+async function loadAllAnnotations() {
+    while (annotationListBox.firstChild) {
+        annotationListBox.removeChild(annotationListBox.firstChild);
+    }
+    const result = await getFromStorage('annotationList');
+    if (result.annotationList) {
+        let _url = new URL(tab.url);
+        annotationList = result.annotationList.filter((a, _i) => a.url === _url.hostname + _url.pathname);
+    }
+    for(let i=0; i<annotationList.length; i++) {
+        const annotationEl = annotationList[i];
+        const listItem = document.createElement("div");
+        listItem.classList.add("list-item");
+        listItem.setAttribute("data-annotate-id", annotationEl.uuid);
+        listItem.innerHTML = `
+            <div class="list-name">${annotationEl.text === "" ? "Empty" : annotationEl.text}</div>
+            <div class="list-options">
+                <div class="list-btns annotate-edit-btn"></div>
+                <div class="list-btns annotate-delete-btn"></div>
+            </div>
+        `;
+        annotationListBox.appendChild(listItem);
+    }
+    document.querySelectorAll(".annotate-edit-btn").forEach((button) => {
+        button.addEventListener("click", () => annotateAction(EDIT_ANNOTATION, button.parentNode.parentNode.getAttribute("data-annotate-id")));
+    });
+    document.querySelectorAll(".annotate-delete-btn").forEach((button) => {
+        button.addEventListener("click", () => annotateAction(DELETE_ANNOTATION, button.parentNode.parentNode.getAttribute("data-annotate-id")));
+    });
+}
+
+function annotateAction(action, uuid) {
+    chrome.tabs.sendMessage( tab.id, {
+        task: action,
+        uuid: uuid,
+    }, (response) => {
+        if (response.res === SUCCESS) {
+            loadAllAnnotations();
         }
     });
 }
