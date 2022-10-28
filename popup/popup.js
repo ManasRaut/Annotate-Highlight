@@ -41,7 +41,7 @@ window.onload = async () => {
     selectedColor = DEFAULT_COLORS[0];
     selectedColorId = `${DEFAULT_COLORS[0]}Id`;
     let result = await getFromStorage("colorsList");
-    if (result.colorsList) {
+    if (result?.colorsList) {
         colorsList = result.colorsList;
     }
 
@@ -72,7 +72,7 @@ window.onload = async () => {
         chrome.tabs.sendMessage( tabs[0].id, {
                 task: IS_HIGHLIGHTER_ON,
             }, (response) => {
-                if (response.res == HIGHIGHTER_ON) {
+                if (response?.res === HIGHIGHTER_ON) {
                     addNewHighlightBtn.className = ADDBUTTON_ON_CLASS;
                     addNewHighlightBtn.innerText = "Turn off";
                 }

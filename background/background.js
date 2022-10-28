@@ -97,10 +97,10 @@ function addAnnotation(tab) {
         task:  ADD_ANNOTATION,
     }, (response) => {
         // update title of context menu accordingly
-        if (response.res == SUCCESS) {
-            chrome.contextMenus.update("add-annotation", { title: "cancel annotation" });
-        } else {
-            chrome.contextMenus.update("add-annotation", { title: "Add annotation" });
-        }
+        // if (response.res == SUCCESS) {
+        //     chrome.contextMenus.update("add-annotation", { title: "cancel annotation" });
+        // } else {
+        //     chrome.contextMenus.update("add-annotation", { title: "Add annotation" });
+        // }
     });
 }
