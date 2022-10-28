@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .HIGHLIGHT_CONTEXTMENU {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    background-color: lightgray;
+    padding: 8px;
+    display: flex;
+    border-radius: 8px;
+    box-shadow: 3px 4px 2px 1px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+.HIGHLIGHT_CONTEXTMENU::after {
+    width: 0px;
+    height: 0px;
+    content: "";
+    position: absolute;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid lightgray;
+    border-bottom: 8px solid transparent;
+    left: 32px;
+    bottom: -14px;
+    border-radius: 8px;
+}
+.HIGHLIGHT_CONTEXTMENU_BUTTON {
+    width: 26px;
+    cursor: pointer;
+    height: 26px;
+    margin: 2px 8px 0px 8px;
+    display: block;
+}
+
+#HIGHLIGHT_CONTEXTMENU_DELETE_BTN {
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(-2px -2px 2px #000);
+    background-image: url('../images/deleteIcon.svg');
+}
+        /* .HIGHLIGHT_CONTEXTMENU {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            background-color: lightgray;
+            padding: 8px;
+            display: flex;
+            border-radius: 8px;
+            box-shadow: 3px 4px 2px 1px rgba(0, 0, 0, 0.4);
+        }
+        .HIGHLIGHT_CONTEXTMENU::after {
+            width: 0px;
+            height: 0px;
+            content: "";
+            position: absolute;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid lightgray;
+            border-bottom: 8px solid transparent;
+            left: 32px;
+            bottom: -14px;
+            border-radius: 8px;
+        }
+
+        .HIGHLIGHT_CONTEXTMENU_BUTTON > img{
+            width: 16px;
+            cursor: pointer;
+            height: 16px;
+            margin: 2px 8px 0px 8px;
+        } */
+        .annotation-cont {
+            position: absolute;
+            background-color: wheat;
+            box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.4);
+            border-radius: 0px 4px 4px 4px;
+        }
+        .annotation-cont::before {
+            width: 0px;
+            height: 0px;
+            content: "";
+            position: absolute;
+            border-top: 8px solid rgb(243, 210, 149);
+            border-left: 8px solid transparent;
+            border-right: 8px solid rgb(243, 210, 149);
+            border-bottom: 8px solid transparent;
+            left: -10px;
+            top: 0px;
+            border-radius: 8px;
+        }
+        .annotation-header {
+            background-color: rgb(243, 210, 149);
+            display: flex;
+            justify-content: end;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+        }
+        .annotation-header-btn {
+            padding: 4px 8px;
+            margin: 0px 2px;
+            border-radius: 2px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+        .annotation-header-btn:hover {
+            background-color: #f3ba4f;
+        }
+        .annotation-delete-btn {
+            background-size: 12px 12px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url('../images/deleteIcon.svg');
+        }
+        .annotation-close-btn {
+            background-size: 15px 15px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url('../images/closeIcon.svg');
+        }
+        .annotation-body > ::-webkit-scrollbar {
+            width: 5px;
+            cursor: pointer;
+        }
+        .annotation-body > ::-webkit-scrollbar-track {
+            background-color: wheat;
+        }
+        .annotation-body > ::-webkit-scrollbar-thumb {
+            background-color: rgb(77, 68, 53);
+            border-radius: 4px;
+        }
+        .annotation-editbox {
+            background-color: wheat;
+            border: none;
+            padding: 0px;
+            min-width: 200px;
+            min-height: 40px;
+            outline: none;
+            max-width: 500px;
+            max-height: 300px;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-y: auto;
+            overflow-x: none;
+        }
+        .annotation-body {
+            min-width: 200px;
+            min-height: 40px;
+            max-width: 500px;
+            max-height: 300px;
+            padding: 4px;
+        }
+        .annotation-cursor {
+            position: absolute;
+            left: 600px;
+            top: 400px;
+            width: 25px;
+            height: 20px;
+            background-image: url('../images/noteIcon.svg');
+            background-size: 25px 20px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: transparent;
+            filter: drop-shadow(2px 2px 2px #666);
+            transition: width 0.2s;
+            transition: height 0.2s;
+            transition: background-size 0.2s;
+            cursor: pointer;
+        }
+        .annotation-cursor:hover {
+            width: 30px;
+            height: 25px;
+            background-size: 30px 25px;
+            filter: drop-shadow(4px 4px 2px #666);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="annotation-cont">
+        <div class="annotation-header">
+            <div class="annotation-header-btn annotation-delete-btn"></div>
+            <div class="annotation-header-btn annotation-close-btn"></div>
+        </div>
+        <div class="annotation-cursor"></div>
+        <div class="annotation-body">
+            <div contentEditable="true" class="annotation-editbox">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem ear
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut officia iure deleniti dolores fugiat ullam sunt placeat animi error, repudiandae quos quisquam architecto expedita saepe aliquam harum consectetur nam inventore.
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="HIGHLIGHT_CONTEXTMENU">
+        <div class="HIGHLIGHT_CONTEXTMENU_BUTTON">
+            <img src="../images/colorPalleteIcon.svg" alt="color"/>
+        </div>
+        <div class="HIGHLIGHT_CONTEXTMENU_BUTTON">
+            <img src="../images/deleteIcon.svg" alt="delete"/>
+        </div>
+    </div> -->
+    <!-- <pre> -->
+    <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat facilis praesentium doloremque obcaecati quas
+        iste consequuntur dolore. Rem vero quasi, est excepturi non, cupiditate dolorum voluptate quisquam quia, et
+        consequuntur?
+
+        <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus doloribus nobis inventore non corporis ea
+            cumque culpa sunt maiores praesentium amet dolor recusandae, ex natus consectetur veritatis a quam!
+            Accusantium?
+        </div>
+        <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat cumque, saepe
+            deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit. Provident
+            necessitatibus dolor ratione officia.
+            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem sint placeat deserunt suscipit fuga
+                blanditiis impedit ab architecto dicta. Quam, quasi obcaecati nulla nihil eaque neque alias. Atque,
+                inventore blanditiis.</div>
+            <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facilis culpa nulla autem earum saepe,
+                excepturi asperiores nemo suscipit quibusdam repellat, quaerat, accusantium modi inventore obcaecati
+                eius. Pe<i>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita magnam reiciendis ut
+                    quisquam iure. Modi quisquam maiores fugit. Saepe aliquam expedita aliquid quasi beatae natus in
+                    quos nisi maiores esse.</i>rferendis, inventore ipsum!</h1>
+            <div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat cumque,
+                saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit. Provident
+                necessitatibus dolor ratione officia.
+                <u>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat cumque,
+                    saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit.
+                    Provident necessitatibus<b>Huafeffeffef</b> dolor ratione officia.
+                </u>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat cumque,
+                saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit. Provident
+                necessitatibus dolor ratione officia.
+                <i>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat cumque,
+                    saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit.
+                    Provident necessitatibus dolor ratione officia.
+                    <s>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat
+                        cumque, saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam
+                        suscipit. Provident necessitatibus dolor ratione officia.
+                        <code>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat cumque, saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit. Provident necessitatibus dolor ratione officia.
+                    </code>
+                    </s>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat
+                    cumque, saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit.
+                    Provident necessitatibus dolor ratione officia.
+                </i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat cumque,
+                saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit. Provident
+                necessitatibus dolor ratione officia.
+            </div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, temporibus. Tempore placeat cumque,
+            saepe deserunt tempora dolores quam ipsam illo pariatur, aperiam eligendi aliquam suscipit. Provident
+            necessitatibus dolor ratione officia.
+        </div>
+        <div id="container" class="container"></div>
+    </div>
+    <!-- </pre> -->
+    <script src="./test.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,257 @@
+html {
+    width: 400px;
+    height: 500px;
+}
+.header {
+    display: flex;
+    justify-content: right;
+    padding: 12px;
+    align-items: center;
+}
+.section {
+    margin: 4px 0px;
+    padding: 12px 12px;
+    border-top: 1px solid lightgray;
+    display: flex;
+    justify-content: space-between;
+}
+.section-block {
+    margin: 4px 0px;
+    padding: 12px 12px;
+    border-top: 1px solid lightgray;
+}
+.section-title {
+    margin: 4px;
+    font-size: 18px;
+}
+.color-list {
+    display: flex;
+    justify-content: space-between;
+    width: 55%;
+}
+.color-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    margin: 0px 4px;
+}
+.color-button:hover {
+    box-shadow: 2px 2px 8px 1px rgb(180, 180, 180);
+}
+
+#searchInput {
+    border: 1px solid lightgray;
+    margin: 8px 0px;
+    border-radius: 2px;
+    padding: 6px 10px;
+    font-size: 14px;
+    background-color: rgb(221, 221, 221);
+    outline: none;
+    width: 340px;
+}
+.list-box {
+    display: flex;
+    overflow-y: auto;
+    overflow-x: none;
+    flex-direction: column;
+    padding: 4px 0px;
+    max-height: 350px;
+}
+.list-item {
+    display: flex;
+    padding: 6px 8px;
+    background-color: white;
+    align-items: center;
+}
+.list-item:hover {
+    box-shadow: 0px 1px 0px 1px lightgray;
+}
+.list-colorbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: tomato;
+    margin: 0px 4px;
+}
+.list-name {
+    flex: 1;
+    margin: 0px 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.list-options {
+    display: flex;
+    justify-content: center;
+}
+.list-btns {
+    padding: 4px 8px;
+    margin: 0px 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+.list-btns:hover {
+    background-color: rgb(233, 233, 233);
+}
+.delete-h-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/deleteIcon.svg');
+}
+.copy-h-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/copyIcon.svg');
+}
+.annotate-delete-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/deleteIcon.svg');
+}
+.annotate-edit-btn {
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../images/editIcon.svg');
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    margin-left: 6px;
+}
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+} 
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+} 
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: #2196F3;
+} 
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+} 
+input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+} 
+.slider.round {
+    border-radius: 20px;
+}
+.slider.round:before {
+    border-radius: 50%;
+}
+.add-btn {
+    color: white;
+    padding: 8px 14px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 2px 2px rgb(233, 233, 233);
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+.add-btn:hover {
+    box-shadow: 1px 1px 2px 4px rgb(233, 233, 233);
+}
+.add-btn-on {
+    background-color: rgb(243, 161, 147);
+}
+.add-btn-off {
+    background-color: orange;;
+}
+.selectedColor {
+    box-shadow: 2px 2px 8px 1px rgb(180, 180, 180);
+    border: 1px solid dodgerblue;
+}
+/* TODO (temp): css to add delete all button later */
+.searchbox-cont {
+    display: flex;
+}
+.delete-all-btn {
+    padding: 4px 8px;
+    margin: 0px 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: rgb(131, 131, 131);
+}
+
+.tabs-section {
+    margin: 4px 0px -4px 0px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    justify-content: center;
+}
+
+.tabs-button {
+    padding: 12px 12px;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+.tabs-button:hover {
+    background-color: #f3f3f3;
+}
+#highlight-btn {
+    border-right: 1px solid lightgray;
+    box-shadow: 0px 2px 4px 1px #b4b4b4;
+}
+#annotation-btn {
+    background-color: #f3f3f3;
+}
+
+.pick-color-btn {
+    padding: 12px 16px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #ebebeb;
+    background-image: url('../images/colorPickerIcon.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    border-radius: 10px;
+    box-shadow: 0px 1px 2px 1px #b4b4b4;
+}
+.pick-color-btn:hover{
+    box-shadow: 0px 2px 4px 1px #b4b4b4;
+}
+#color-wheel-cont {
+    box-shadow: 0px 2px 4px 1px #b4b4b4;
+    padding: 4px;
+    position: absolute;
+    top: 75px;
+    left: 225px;
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+}

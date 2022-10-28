@@ -3,21 +3,35 @@
     "name": "Annotate & Highlight",
     "description": "An extension for highlighting and annotating on web pages. It alsp saves the highlights and annotation for future revisit in the websites",
     "version": "1.0",
+    "author": "Manas Raut, Yash Sawant, Vignesh Pillutla, Pranav Satam",
     
     "background": {
-        "service_worker": "script/background.js"
+        "service_worker": "background/background.js"
     },
     "action": {
-        "default_popup": "html/popup.html",
+        "default_popup": "popup/popup.html",
         "default_icon": "images/icon128x128.png"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "tabs",
+        "contextMenus"
     ],
     "content_scripts": [
         {
           "matches": ["<all_urls>"],
-          "js": ["script/highlight.js"]
+          "js": [
+                "contentScripts/common.js",
+                "contentScripts/constants.js",
+                "contentScripts/highlight.js",
+                "contentScripts/highlightMenu.js",
+                "contentScripts/annotation.js",
+                "contentScripts/annotation/annotationEditBox.js"
+            ],
+            "css": [
+                "contentScripts/highlightMenu.css",
+                "contentScripts/annotation/annotation.css"
+            ]
         }
     ],
     "icons": {
@@ -26,6 +40,24 @@
         "48": "images/icon48x48.png",
         "128": "images/icon128x128.png"
     },
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "images/*.png",
+                "images/*.svg",
+                "contentScripts/highlightMenu.html",
+                "contentScripts/annotation/annotation.html"
+            ]
+        }
+    ],
 
-    "author": "Manas Raut, Yash Sawant, Vignesh Pillutla, Pranav Satam"
+    "commands": {
+        "toggle-highlighter": {
+            "suggested_key": "Alt+H",
+            "description": "Turns highlighter cursor on or off"
+        }
+    }
 }

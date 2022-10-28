@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annotate & Highlight</title>
+    <link rel="stylesheet" type="text/css" href="popup.css">
+</head>
+
+<body>
+    <div class="section-block">
+        <div class="add-btn add-btn-off" id="addHighlight">New Highlight</div>
+    </div>
+    <div id="error-msg" style="display:none;color:red;">could'nt start highligther</div>
+    <div class="section">
+        <div class="section-title">Select color</div>
+        <div class="color-list">
+
+        </div>
+        <div class="pick-color-btn"></div>
+    </div>
+    <div class="section" id="color-wheel-cont" style="display: none;">
+        <div id="color-wheel"></div>
+    </div>
+    <div class="tabs-section">
+        <div class="tabs-button" id="highlight-btn">Highlights</div>
+        <div class="tabs-button" id="annotation-btn">Annotations</div>
+    </div>
+    <div class="section-block" id="annotation-section">
+        <div class="section-title">Annotations:</div>
+        <div class="annotation-list-box" id="annotation-listBox">
+            <!-- TODO (INFO) : List item html format -->
+            <!-- <div class="list-item">
+                <div class="list-name">Clafefeaf.....</div>
+                <div class="list-options">
+                    <div class="list-btns annotate-edit-btn"></div>
+                    <div class="list-btns annotate-delete-btn"></div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="section-block" id="highlight-section">
+        <div class="section-title">Highlights:</div>
+        <!-- TODO (Feature) : Add search for highlights and annotations -->
+        <!-- <div>
+            <input type="text" id="searchInput" placeholder="Search highlights... ">
+        </div> -->
+        <div class="list-box" id="listBox">
+            <!-- TODO (INFO) : List item html format -->
+            <!-- <div class="list-item">
+                <div class="list-colorbox"></div>
+                <div class="list-name">Clafefeaf.....</div>
+                <div class="list-options">
+                    <div class="list-btns copy-h-btn"></div>
+                    <div class="list-btns delete-h-btn"></div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+    <script src="../contentScripts/common.js"></script>
+    <script src="../contentScripts/constants.js"></script>
+</body>
+
+</html>
